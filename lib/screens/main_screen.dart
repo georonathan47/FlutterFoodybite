@@ -3,6 +3,7 @@ import 'package:flutter_foodybite/screens/add.dart';
 import 'package:flutter_foodybite/screens/home.dart';
 import 'package:flutter_foodybite/screens/label.dart';
 import 'package:flutter_foodybite/screens/profile.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'notifications.dart';
 
@@ -34,11 +35,26 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Dashboard",
+          style: GoogleFonts.raleway(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset("assets/logo.png"),
+          ),
+        ],
+      ),
       body: PageView(
         physics: NeverScrollableScrollPhysics(),
         controller: _pageController,
         onPageChanged: onPageChanged,
-        children: List.generate(5, (index) =>  pages[index] ),
+        children: List.generate(5, (index) => pages[index]),
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(
@@ -68,9 +84,9 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
- // void navigationTapped(int page) {
- //    _pageController.jumpToPage(page);
- //  }
+  // void navigationTapped(int page) {
+  //    _pageController.jumpToPage(page);
+  //  }
 
   @override
   void initState() {
@@ -91,18 +107,19 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   buildTabIcon(int index) {
-      return Container(
-        margin: EdgeInsets.fromLTRB( index == 3 ? 30 : 0, 0,  index == 1 ? 30 : 0, 0),
-        child: IconButton(
-          icon: Icon(
-            icons[index],
-            size: 24.0,
-          ),
-          color: _page == index
-              ? Theme.of(context).accentColor
-              : Theme.of(context).textTheme.caption.color,
-          onPressed: () => _pageController.jumpToPage(index),
+    return Container(
+      margin:
+          EdgeInsets.fromLTRB(index == 3 ? 30 : 0, 0, index == 1 ? 30 : 0, 0),
+      child: IconButton(
+        icon: Icon(
+          icons[index],
+          size: 24.0,
         ),
-      );
+        color: _page == index
+            ? Theme.of(context).accentColor
+            : Theme.of(context).textTheme.caption.color,
+        onPressed: () => _pageController.jumpToPage(index),
+      ),
+    );
   }
 }
