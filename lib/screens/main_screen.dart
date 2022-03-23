@@ -36,17 +36,27 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0.75,
+        backgroundColor: Colors.white,
         title: Text(
           "Dashboard",
           style: GoogleFonts.raleway(
             fontSize: 18,
             fontWeight: FontWeight.bold,
+            color: Colors.black,
+            letterSpacing: .6
           ),
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset("assets/logo.png"),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Transform.scale(
+              scale: 1.75,
+              child: Image.asset(
+                "assets/logo.png",
+                // scale: 1.75,
+              ),
+            ),
           ),
         ],
       ),
@@ -116,7 +126,7 @@ class _MainScreenState extends State<MainScreen> {
           size: 24.0,
         ),
         color: _page == index
-            ? Theme.of(context).accentColor
+            ? Theme.of(context).colorScheme.secondary
             : Theme.of(context).textTheme.caption.color,
         onPressed: () => _pageController.jumpToPage(index),
       ),

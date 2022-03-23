@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_foodybite/screens/categories.dart';
 import 'package:flutter_foodybite/screens/trending.dart';
+import 'package:flutter_foodybite/util/Util.dart';
 import 'package:flutter_foodybite/util/categories.dart';
 import 'package:flutter_foodybite/util/friends.dart';
 import 'package:flutter_foodybite/util/restaurants.dart';
@@ -10,13 +9,15 @@ import 'package:flutter_foodybite/widgets/category_item.dart';
 import 'package:flutter_foodybite/widgets/search_card.dart';
 import 'package:flutter_foodybite/widgets/slide_item.dart';
 
+import '../components/ProgressIndicator.dart';
+
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
-        if(!currentFocus.hasPrimaryFocus){
+        if (!currentFocus.hasPrimaryFocus) {
           currentFocus.unfocus();
         }
       },
@@ -46,37 +47,56 @@ class Home extends StatelessWidget {
     );
   }
 
+  void fetchFood(BuildContext context) async {
+    try {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const ProgressDialog(displayMessage: 'Please wait...');
+        },
+      );
+    } catch (error) {}
+  }
+
   buildRestaurantRow(String restaurant, BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Text(
-          "$restaurant",
-          style: TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.w800,
-          ),
-        ),
-        FlatButton(
-          child: Text(
-            "See all (9)",
+    try {
+      // showDialog(
+      //   context: context,
+      //   builder: (context) {
+      //     return const ProgressDialog(displayMessage: 'Please wait...');
+      //   },
+      // );
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            "$restaurant",
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              fontSize: 20.0,
+              fontWeight: FontWeight.w800,
             ),
           ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return Trending();
-                },
+          FlatButton(
+            child: Text(
+              "See all (9)",
+              style: TextStyle(
+                color: Theme.of(context).accentColor,
               ),
-            );
-          },
-        ),
-      ],
-    );
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return Trending();
+                  },
+                ),
+              );
+            },
+          ),
+        ],
+      );
+    } catch (e) {}
   }
 
   buildCategoryRow(String category, BuildContext context) {
@@ -114,9 +134,7 @@ class Home extends StatelessWidget {
 
   buildSearchBar(BuildContext context) {
     return Container(
-        margin: EdgeInsets.fromLTRB(10, 5, 10, 0),
-        child: SearchCard()
-    );
+        margin: EdgeInsets.fromLTRB(10, 5, 10, 0), child: SearchCard());
   }
 
   buildCategoryList(BuildContext context) {
